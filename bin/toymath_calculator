@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+"""Apply a toymath operation to two numbers and print the result."""
+
+import argparse
+import toymath
+
+# set up the command line argument parser
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("operation", choices=toymath.__all__,
+                    help="the operation to apply")
+parser.add_argument("a", type=float, help="the first number")
+parser.add_argument("b", type=float, help="the second number")
+args = parser.parse_args()
+
+# the program
+operation = getattr(toymath, args.operation)
+print(operation(args.a, args.b))
