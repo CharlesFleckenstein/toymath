@@ -2,32 +2,16 @@
 """Apply a toymath operation to two numbers and print the result."""
 
 import argparse
-
 import toymath
 
+# set up the command line argument parser
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("operation", choices=toymath.__all__,
+                    help="the operation to apply")
+parser.add_argument("a", type=float, help="the first number")
+parser.add_argument("b", type=float, help="the second number")
+args = parser.parse_args()
 
-def number(value):
-    """Parse a string as an int if possible, otherwise as a float."""
-    try:
-        return int(value)
-    except ValueError:
-        try:
-            return float(value)
-        except ValueError:
-            raise argparse.ArgumentTypeError(f"invalid number: {value!r}")
-
-
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation", choices=toymath.__all__,
-                        help="the operation to apply")
-    parser.add_argument("a", type=number, help="the first number")
-    parser.add_argument("b", type=number, help="the second number")
-    args = parser.parse_args()
-
-    operation = getattr(toymath, args.operation)
-    print(operation(args.a, args.b))
-
-
-if __name__ == "__main__":
-    main()
+# the program
+operation = getattr(toymath, args.operation)
+print(operation(args.a, args.b))
